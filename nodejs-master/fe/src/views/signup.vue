@@ -20,7 +20,7 @@
             <i>는 필수 입력항목입니다.</i>
           </span>
 
-          <v-btn large block color="primary" @click="signup(password, email)">회원 가입</v-btn>
+          <v-btn large block color="primary" @click="signup(password, email, name, age)">회원 가입</v-btn>
         </div>
       </v-card>
     </v-flex>
@@ -39,8 +39,8 @@ export default {
     }
   },
   methods: {
-    signup(password, email) {
-      console.log(email, password);
+    signup(password, email, name, age) {
+      console.log(email, password, name, age);
       if (((password != '') && (password != null))&& ((email != '') && (email != null))) {
         if (!/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/.test(password)) {
           alert('비밀번호는 숫자+영문자+특수문자 조합으로 8자리 이상 사용해야 합니다.');
