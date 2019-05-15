@@ -24,6 +24,11 @@ export default new Router({
       component: () => import('./views/REST.vue')
     },
     {
+      path: '/signup',
+      name: 'signup',
+      component: () => import('./views/signup.vue')
+    },
+    {
       path: '/login',
       name: 'login',
       component: () => import('./views/login.vue')

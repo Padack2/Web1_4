@@ -103,7 +103,7 @@ export default {
         },
         {
           icon: 'face',
-          title: 'signup',
+          title: '회원가입',
           to: '/signup'
         }
       ],
