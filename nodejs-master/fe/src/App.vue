@@ -100,6 +100,11 @@ export default {
           icon: 'face',
           title: 'login',
           to: '/login'
+        },
+        {
+          icon: 'face',
+          title: '회원가입',
+          to: '/signup'
         }
       ],
       miniVariant: false,
