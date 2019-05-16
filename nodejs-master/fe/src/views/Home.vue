@@ -18,22 +18,21 @@ a {
 
 <template>
   <v-container fluid>
-      <v-layout column align-center>
-        <v-btn color="info" @click = "loginDialog()">Login</v-btn>
-      </v-layout>
-      <v-dialog v-model="dialog" persistent max-width="500px">
-        <v-toolbar flat>
-         <v-toolbar-title>로그인</v-toolbar-title>
-           <v-btn fab dark small color="primary" style="left : 77%;" @click.native="dialog = false">
-             <v-icon dark>remove</v-icon>
-           </v-btn>
+    <v-layout column align-center>
+      <v-btn color="info" @click = "loginDialog()">Login</v-btn>
+    </v-layout>
+    <v-dialog v-model="dialog" persistent max-width="500px">
+      <v-toolbar flat>
+        <v-toolbar-title>로그인</v-toolbar-title>
+          <v-btn fab dark small color="primary" style="left : 77%;" @click.native="dialog = false">
+            <v-icon dark>remove</v-icon>
+          </v-btn>
        </v-toolbar>
-        <v-card>
+       <v-card>
           <div class="pa-3">
             <v-text-field
                 v-model="email"
                 label="이메일을 입력하세요"
-
             >
             </v-text-field>
             <v-text-field
@@ -58,7 +57,7 @@ a {
           </div>
         </v-card>
       </v-flex>
-      </v-dialog>
+    </v-dialog>
   </v-container>
 </template>
 
@@ -76,7 +75,16 @@ export default {
       ]
     }
   },
-  mounted () { this.dialog = false; },
+  mounted () {
+    this.dialog = false;
+    axios.get('http://localhost:3000/api/signup')
+        .then((r) => {
+          this.allUsers = r.data.users
+        })
+        .catch((e) => {
+          console.error(e.message)
+        })
+  },
   methods: {
     loginDialog () {
       console.log("loginddddd");
@@ -94,6 +102,7 @@ export default {
           alert('이메일과 비밀번호가 일치하지 않습니다.')
           else{
           alert('로그인 완료')
+          this.dialog = false
         }
       }
       // 그 유저의 비밀번호와 입력된 비밀번호를 비교한다.
