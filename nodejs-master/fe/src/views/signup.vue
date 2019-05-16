@@ -42,7 +42,7 @@ export default {
   methods: {
     signup(email,password, name, age) {
       console.log(this.email, this.password, this.name, this.age);
-      if ((password != '') && (email != '')) {
+      if ((password !== '') && (email !== '')) {
         if (!/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/.test(password)) {
           alert('비밀번호는 숫자+영문자+특수문자 조합으로 8자리 이상 사용해야 합니다.');
         } else {
@@ -68,6 +68,7 @@ export default {
                 }
                 else
                   alert('회원가입이 완료되었습니다.');
+                  location.replace("/login")
                 // this.email= '',
                 // this.password= '',
                 // this.name='',
