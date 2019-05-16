@@ -13,14 +13,14 @@
           </v-text-field>
           <v-text-field v-model="name" label="이름을 입력하세요">
           </v-text-field>
-          <v-text-field v-model="age" label="나이를 입력하세요">
+          <v-text-field v-model="age" type="number" label="나이를 입력하세요">
           </v-text-field>
           <span>
             <i class="material-icons" display='inline'>star</i>
             <i>는 필수 입력항목입니다.</i>
           </span>
 
-          <v-btn large block color="primary" @click="signup(password, email, name, age)">회원 가입</v-btn>
+          <v-btn large block color="primary" @click="signup(email, password, name, age)">회원 가입</v-btn>
         </div>
       </v-card>
     </v-flex>
@@ -29,26 +29,54 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   data() {
     return {
-      email: null,
-      password: null,
-      name: null,
-      age: null,
+      email: '',
+      password: '',
+      name: '',
+      age: '',
     }
   },
   methods: {
-    signup(password, email, name, age) {
-      console.log(email, password, name, age);
-      if (((password != '') && (password != null))&& ((email != '') && (email != null))) {
+    signup(email,password, name, age) {
+      console.log(this.email, this.password, this.name, this.age);
+      if ((password !== '') && (email !== '')) {
         if (!/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/.test(password)) {
           alert('비밀번호는 숫자+영문자+특수문자 조합으로 8자리 이상 사용해야 합니다.');
         } else {
           if (/(\w)\1\1\1/.test(password)) {
             alert('같은 문자를 4번 이상 사용하실 수 없습니다.');
           } else {
-            alert('회원가입이 완료되었습니다.');
+
+
+            axios.post('http://localhost:3000/api/signup', {
+              email: this.email,
+              password: this.password,
+              name: this.name,
+              age: this.age
+            })
+              .then((r) => {
+                console.log(r.data);
+                if(!r.data.success)
+                {
+                    if(r.data.msg.substring(0,6)=='E11000')
+                      alert('이미 존재하는 계정입니다.');
+                    else
+                      alert('회원가입에 실패하였습니다.');
+                }
+                else
+                  alert('회원가입이 완료되었습니다.');
+                  location.replace("/login")
+                // this.email= '',
+                // this.password= '',
+                // this.name='',
+                // this.age= ''
+              })
+              .catch((e) => {
+                console.error(e.message)
+              })
           }
         }
       } else {
